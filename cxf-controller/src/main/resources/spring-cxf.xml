@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+
+    <!--
+            基于Jackson的JAX-RS提供程序，可以自动为JSON内容类型（MediaType）序列化和反序列化资源。
+            -->
+    <!-- 
+        address 发布服务地址 
+        servicesBeans 服务实现类 
+        
+     -->
+    <jaxrs:server id="userService" address="/userService">
+        <jaxrs:serviceBeans>
+            <bean class="com.huawei.webservice.impl.BlogServiceImpl"/>
+        </jaxrs:serviceBeans>
+
+        <jaxrs:providers>
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+            <bean class="org.apache.cxf.jaxrs.provider.JAXBElementProvider"/>
+        </jaxrs:providers>
+
+        <jaxrs:inInterceptors>
+            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+        </jaxrs:inInterceptors>
+        <jaxrs:outInterceptors>
+            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+        </jaxrs:outInterceptors>
+    </jaxrs:server>
+
+
+</beans>
